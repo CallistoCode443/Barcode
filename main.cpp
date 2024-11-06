@@ -16,13 +16,13 @@ int main()
     std::cout << "Размер изображения: " << imageBuffer.size() << " байт" << std::endl;
     file.close();
 
-    void *recognizer = saiv_vision_barcode_recognizer_init(0, 0);
+    void *recognizer = saiv_vision_barcode_recognizer_init(ImageCaptureMode::StillPhoto, RecognitionTarget::All);
 
     saiv_vision_barcode_recognizer_set_image_size(recognizer, 300, 300);
 
     int result = saiv_vision_barcode_recognizer_process(recognizer, imageBuffer.data());
     std::cout << "Результат обработки кадра: " << result << std::endl;
-    
+
     auto objectCount = saiv_vision_barcode_recognizer_get_recognized_object_count(recognizer);
     std::cout << "Количество распознанных объектов: " << objectCount << std::endl;
 
@@ -33,7 +33,7 @@ int main()
     }
     else
     {
-        std::cout << "QR-код не найден.."<< std::endl;
+        std::cout << "QR-код не найден.." << std::endl;
     }
     saiv_vision_barcode_recognizer_release(recognizer);
     return 0;
